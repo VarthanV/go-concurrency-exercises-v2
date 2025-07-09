@@ -11,6 +11,17 @@ func simpleArray() {
 
 }
 
+func customSliceDriver() {
+	s := New[string](2)
+	s.Append("foo")
+	s.InsertInIndex(0, "bas")
+	s.InsertInIndex(1, "boo")
+	s.RemoveFromIndex(1)
+	fmt.Println(s.Pop())
+	fmt.Println(s.All())
+}
+
 func main() {
 	simpleArray()
+	customSliceDriver()
 }
