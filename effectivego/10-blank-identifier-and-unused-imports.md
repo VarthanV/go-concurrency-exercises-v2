@@ -79,7 +79,24 @@ import _ "net/http/pprof"
 
 # Interface checks
 
-- 
+- A type need not declare it implements an interface , Instead a type implements an interface just implementing the methods of the interface.
 
+- In practice most of the interface conversions are static so they are checked during runtime.
 
+- For example, passing an ``*os.File`` to a function expecting an ``io.Reader ``will not compile unless ``*os.File`` implements the io.Reader interface.
 
+- One instance is in the encoding/json package, which defines a ``Marshaler`` interface. When the JSON encoder receives a value that implements that interface
+
+```go
+m, ok := val.(json.Marshaler)
+```
+
+- If it is necessary to check whether a type implements an interface and without actually using the interface itself,perhaps not part of an error check, use the blank identifier to ignore the same.
+
+```go
+if _, ok := val.(json.Marshaler); ok {
+    fmt.Printf("value %v of type %T implements json.Marshaler\n", val, val)
+}
+```
+
+- Don't do this for every type that satisfies an interface, though. By convention, such declarations are only used when there are no static conversions already present in the code, which is a rare event.
